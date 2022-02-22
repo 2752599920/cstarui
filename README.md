@@ -160,12 +160,12 @@ data() {
 | label  | 显示的标题                                    |    String     |           --           |  --  |
 | prop   | 对应列内容的字段名（可使用插槽自定义）                      |    String     |           --           |  --  |
 | width  | 对应列的宽度                                   | String/Number |           --           |  --  |
-| slot   | 自定义插槽（使用参考  [CTable  Slot](#CTable  Slot) ） |    String     |           --           |  --  |
+| slot   | 自定义插槽（使用参考 CTable  Slot）                 |    String     |           --           |  --  |
 | ...待更新 | ...                                      |      ...      |          ...           | ...  |
 
 ### CTable  Options  
 
-### `基于 element ui table 的除 data 外的所有 Attributes ,增加了pagination 属性`
+`基于 element ui table 的除 data 外的所有 Attributes ,增加了pagination 属性`
 
 | 参数         | 说明           |   类型    |    可选项     |  默认值  |
 | ---------- | ------------ | :-----: | :--------: | :---: |
