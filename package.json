@@ -1,0 +1,58 @@
+{
+    "name": "xyui",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "serve": "vue-cli-service serve",
+        "build": "vue-cli-service build",
+        "lint": "vue-cli-service lint",
+        "lib": "vue-cli-service build --target lib --name xyui --dest lib packages/index.js"
+    },
+    "description": "An enterprise-class UI design language and Vue components implementation",
+    "keywords": [
+        "component",
+        "components",
+        "design",
+        "framework",
+        "frontend",
+        "vue",
+        "vue-component",
+        "ui",
+        "Table",
+        "可乐不冰怎么喝"
+    ],
+    "homepage": "https://gitee.com/c-xt/xyui",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://gitee.com/c-xt/xyui/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://gitee.com:c-xt/xyui.git"
+    },
+    "contributors": [
+        "可乐不冰怎么喝"
+    ],
+    "dependencies": {
+        "core-js": "^3.6.4",
+        "element-ui": "^2.15.6",
+        "vue": "^2.6.11"
+    },
+    "devDependencies": {
+        "@vue/cli-plugin-babel": "~4.3.1",
+        "@vue/cli-plugin-eslint": "~4.3.1",
+        "@vue/cli-service": "~4.3.1",
+        "@vue/eslint-config-prettier": "^6.0.0",
+        "babel-eslint": "^10.1.0",
+        "babel-plugin-component": "^1.1.1",
+        "babel-preset-es2015": "^6.24.1",
+        "eslint": "^6.7.2",
+        "eslint-plugin-prettier": "^3.1.1",
+        "eslint-plugin-vue": "^6.2.2",
+        "node-sass": "^4.12.0",
+        "prettier": "^1.19.1",
+        "sass-loader": "^8.0.2",
+        "vue-template-compiler": "^2.6.11"
+    },
+    "main": "lib/xyui.umd.min.js"
+}
