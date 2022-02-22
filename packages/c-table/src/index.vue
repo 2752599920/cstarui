@@ -1,5 +1,5 @@
 <template>
-  <div class="xy-table">
+  <div class="c-table">
     <el-table
       :data="datas"
       style="width: 100%"
@@ -56,7 +56,7 @@
       </template>
     </el-table>
     <template v-if="options.pagination">
-      <div class="xy-pagination">
+      <div class="c-pagination">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -77,7 +77,7 @@
 import { Table, TableColumn, Pagination } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 export default {
-  name: "XyTable",
+  name: "CTable",
   components: {
     [Table.name]: Table,
     [TableColumn.name]: TableColumn,
@@ -147,8 +147,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.xy-table {
-  .xy-pagination {
+.c-table {
+  .c-pagination {
     width: 100%;
     margin-top: 10px;
     display: flex;

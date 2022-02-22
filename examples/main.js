@@ -1,8 +1,8 @@
 import Vue from "vue";
 import App from "./App.vue";
 
-import xyui from '../packages';
-Vue.use(xyui);
+import cstarui from '../packages';
+Vue.use(cstarui);
 
 Vue.config.productionTip = false;
 

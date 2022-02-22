@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
     <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <xy-table
+    <c-table
       :columns="columns"
       :datas="datas"
       :pagination="pagination"
@@ -25,7 +25,7 @@
           自定义操作插槽{{ row.id }}
         </div>
       </template>
-    </xy-table>
+    </c-table>
   </div>
 </template>
 
