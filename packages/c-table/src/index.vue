@@ -4,13 +4,17 @@
       :data="datas"
       style="width: 100%"
       v-bind="removePaginationAttr(options)"
-      v-on="$listeners"
+      v-on="removePaginationEvent($listeners)"
     >
       <!-- @selection-change="handleChangeSelect" -->
       <template v-for="(col, ci) in columns">
         <el-table-column v-if="col.type" :key="ci" v-bind="col">
         </el-table-column>
-        <el-table-column v-else-if="col.slot" :key="ci" v-bind="removeSlotAttr(col)">
+        <el-table-column
+          v-else-if="col.slot"
+          :key="ci"
+          v-bind="removeSlotAttr(col)"
+        >
           <template v-slot="scope">
             <slot
               :name="col.slot"
@@ -103,17 +107,25 @@ export default {
     return {};
   },
   created() {},
-  mounted() {},
+  mounted() {
+    console.log(this.$listeners);
+  },
   methods: {
-    removeSlotAttr(col={}){
+    removeSlotAttr(col = {}) {
       const tmp = JSON.parse(JSON.stringify(col));
       delete tmp.slot;
-      return tmp
+      return tmp;
     },
-    removePaginationAttr(options={}){
+    removePaginationAttr(options = {}) {
       const tmp = JSON.parse(JSON.stringify(options));
       delete tmp.pagination;
-      return tmp
+      return tmp;
+    },
+    removePaginationEvent(event = {}) {
+      const tmp = JSON.parse(JSON.stringify(event));
+      delete tmp["size-change"];
+      delete tmp["current-change"];
+      return tmp;
     },
     // handleChangeSelect(...args) {
     //   // console.log(...args);
