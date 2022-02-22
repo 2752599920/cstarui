@@ -3,6 +3,9 @@
     <c-table
       :columns="columns"
       :datas="datas"
+      :options="{
+        border:true,
+      }"
       :pagination="pagination"
       @selection-change="handleChangeSelect"
       @size-change="handleSizeChange"
@@ -49,11 +52,13 @@ export default {
           label: "ID",
           prop: "id",
           align: "center",
+          minWidth:'80px'
         },
         {
           label: "名称",
           prop: "name",
           align: "center",
+          'min-width':'200px'
         },
         {
           label: "操作",

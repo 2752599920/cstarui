@@ -27,6 +27,8 @@ Vue.use(cstarui);
 
 ## CTable 使用
 
+本组件基于 `el-table ` 二次开发
+
 `<c-table></c-table>` or `<CTable></CTable>` 
 
 ```html
@@ -104,6 +106,9 @@ data() {
         border:true,
         pagination:true,
         stripe:false,
+        // 支持 el-table除data的所有Attr
+        // 如 ： 使用max-height的话，可以配置maxHeight或者"max-height" 
+        // 包含 - 符号的属性 需要驼峰写法或者加双引号
 	  },
       pagination: {
         page: 1,
@@ -147,16 +152,20 @@ data() {
 
 ### CTable  Columns
 
+`基于 element ui table-column 的除 slot 外的所有 Attributes`
+
 | 参数     | 说明                                       |      类型       |          可选项           | 默认值  |
 | ------ | ---------------------------------------- | :-----------: | :--------------------: | :--: |
 | type   | 对应列的类型。如果设置了 `selection` 则显示多选框；如果设置了 `index` 则显示该行的索引（从 1 开始计算）；如果设置了 `expand` 则显示为一个可展开的按钮 |    String     | selection/index/expand |  --  |
 | label  | 显示的标题                                    |    String     |           --           |  --  |
 | prop   | 对应列内容的字段名（可使用插槽自定义）                      |    String     |           --           |  --  |
 | width  | 对应列的宽度                                   | String/Number |           --           |  --  |
-| slot   | 自定义插槽（使用参考 CTable  Slot）                 |    String     |           --           |  --  |
+| slot   | 自定义插槽（使用参考  [CTable  Slot](#CTable  Slot) ） |    String     |           --           |  --  |
 | ...待更新 | ...                                      |      ...      |          ...           | ...  |
 
-### CTable  Options
+### CTable  Options  
+
+### `基于 element ui table 的除 data 外的所有 Attributes ,增加了pagination 属性`
 
 | 参数         | 说明           |   类型    |    可选项     |  默认值  |
 | ---------- | ------------ | :-----: | :--------: | :---: |
@@ -178,6 +187,8 @@ data() {
 | ...待更新     | ...     |   ...   |    ...     |                   ...                   |
 
 ### CTable  Events
+
+`基于 element ui table 的所有 Events,增加了 size-change 和 current-change事件`
 
 | 事件名              | 说明                  | 参数         |
 | ---------------- | ------------------- | ---------- |

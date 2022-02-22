@@ -108,7 +108,7 @@ export default {
   },
   created() {},
   mounted() {
-    console.log(this.$listeners);
+    // console.log(this.$listeners);
   },
   methods: {
     removeSlotAttr(col = {}) {
