@@ -121,8 +121,8 @@ export default {
       delete tmp.pagination;
       return tmp;
     },
-    removePaginationEvent(event = {}) {
-      const tmp = JSON.parse(JSON.stringify(event));
+    removePaginationEvent() {
+      const tmp = {...this.$listeners};
       delete tmp["size-change"];
       delete tmp["current-change"];
       return tmp;
