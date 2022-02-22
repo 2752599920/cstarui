@@ -142,13 +142,13 @@ data() {
 
 ### CTable  Attributes
 
-| 参数         | 说明      |   类型   |          可选项           | 默认值                                      |
-| :--------- | :------ | :----: | :--------------------: | ---------------------------------------- |
-| columns    | 列表配置项   | Array  |  详细配置见CTable Columns   | []                                       |
-| datas      | 表格数据    | Array  |           --           | []                                       |
-| options    | 扩展配置    | Object |  详细配置见CTable Options   | {pagination: true,border: true,stripe: false} |
-| pagination | 分页选择器配置 | Object | 详细配置见CTable Pagination | {page: 1,size: 10,total: 0,sizes: [5, 10, 15, 20, 25, 30],background: true,layout: "total, sizes, prev, pager, next, jumper",} |
-| ...待更新     | ...     |  ...   |          ...           | ...                                      |
+| 参数         | 说明      |   类型   |                   可选项                    | 默认值                                      |
+| :--------- | :------ | :----: | :--------------------------------------: | ---------------------------------------- |
+| columns    | 列表配置项   | Array  | 详细配置见 [CTable  Columns](#CTable  Columns) | []                                       |
+| datas      | 表格数据    | Array  |                    --                    | []                                       |
+| options    | 扩展配置    | Object | 详细配置见 [CTable  Options](#CTable  Options) | {pagination: true,border: true,stripe: false} |
+| pagination | 分页选择器配置 | Object | 详细配置见[CTable Pagination](#CTable  Pagination) | {page: 1,size: 10,total: 0,sizes: [5, 10, 15, 20, 25, 30],background: true,layout: "total, sizes, prev, pager, next, jumper",} |
+| ...待更新     | ...     |  ...   |                   ...                    | ...                                      |
 
 ### CTable  Columns
 
@@ -160,7 +160,7 @@ data() {
 | label  | 显示的标题                                    |    String     |           --           |  --  |
 | prop   | 对应列内容的字段名（可使用插槽自定义）                      |    String     |           --           |  --  |
 | width  | 对应列的宽度                                   | String/Number |           --           |  --  |
-| slot   | 自定义插槽（使用参考 CTable  Slot）                 |    String     |           --           |  --  |
+| slot   | 自定义插槽（使用参考 [CTable  Slot](#CTable  Slot) ） |    String     |           --           |  --  |
 | ...待更新 | ...                                      |      ...      |          ...           | ...  |
 
 ### CTable  Options  
