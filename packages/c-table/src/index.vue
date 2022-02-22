@@ -7,69 +7,60 @@
       :stripe="options.stripe"
       @selection-change="handleChangeSelect"
     >
-      <template>
-        <template v-for="(col, ci) in columns">
-          <span :key="ci">
-            <el-table-column
-              v-if="col.type"
-              :type="col.type"
-              :width="col.width || 55"
-              :fixed="col.fixed || false"
-              :align="col.align || 'left'"
-            ></el-table-column>
-            <el-table-column
-              v-else-if="col.slot"
-              :label="col.label"
-              :width="col.width"
-              :fixed="col.fixed || false"
-              :align="col.align || 'left'"
-            >
-              <template v-slot="scope">
-                <slot
-                  :name="col.slot"
-                  :row="scope.row"
-                  :column="col"
-                  :index="ci"
-                />
-              </template>
-            </el-table-column>
-            <el-table-column
-              v-else-if="col.prop"
-              :label="col.label"
-              :width="col.width"
-              :fixed="col.fixed || false"
-              :align="col.align || 'left'"
-            >
-              <template v-slot="scope">
-                <slot
-                  :name="col.prop"
-                  :row="scope.row"
-                  :column="col"
-                  :index="ci"
-                >
-                  {{ scope.row[col.prop] }}
-                </slot>
-              </template>
-            </el-table-column>
-          </span>
-        </template>
+      <template v-for="(col, ci) in columns">
+        <span :key="ci">
+          <el-table-column
+            v-if="col.type"
+            :type="col.type"
+            :width="col.width || 55"
+            :fixed="col.fixed || false"
+            :align="col.align || 'left'"
+          ></el-table-column>
+          <el-table-column
+            v-else-if="col.slot"
+            :label="col.label"
+            :width="col.width"
+            :fixed="col.fixed || false"
+            :align="col.align || 'left'"
+          >
+            <template v-slot="scope">
+              <slot
+                :name="col.slot"
+                :row="scope.row"
+                :column="col"
+                :index="scope.$index"
+              />
+            </template>
+          </el-table-column>
+          <el-table-column
+            v-else-if="col.prop"
+            :label="col.label"
+            :width="col.width"
+            :fixed="col.fixed || false"
+            :align="col.align || 'left'"
+          >
+            <template v-slot="scope">
+              <slot :name="col.prop" :row="scope.row" :column="col" :index="scope.$index">
+                {{ scope.row[col.prop] }}
+              </slot>
+            </template>
+          </el-table-column>
+        </span>
       </template>
     </el-table>
-    <template v-if="options.pagination">
-      <div class="c-pagination">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="pagination.page"
-          :page-sizes="pagination.sizes"
-          :page-size="pagination.size"
-          :background="pagination.background"
-          :layout="pagination.layout"
-          :total="pagination.total"
-        >
-        </el-pagination>
-      </div>
-    </template>
+    <div class="c-pagination" v-if="options.pagination">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pagination.page"
+        :page-sizes="pagination.sizes"
+        :page-size="pagination.size"
+        :background="pagination.background"
+        :layout="pagination.layout"
+        :total="pagination.total"
+      >
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -126,9 +117,9 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    handleChangeSelect(...args){
+    handleChangeSelect(...args) {
       // console.log(...args);
-      this.$emit('selection-change',...args)
+      this.$emit("selection-change", ...args);
     },
     // 表格显示数据量变化事件
     handleSizeChange(val) {
