@@ -3,49 +3,37 @@
     <el-table
       :data="datas"
       style="width: 100%"
-      :border="options.border"
-      :stripe="options.stripe"
-      @selection-change="handleChangeSelect"
+      v-bind="removePaginationAttr(options)"
+      v-on="$listeners"
     >
+      <!-- @selection-change="handleChangeSelect" -->
       <template v-for="(col, ci) in columns">
-        <span :key="ci">
-          <el-table-column
-            v-if="col.type"
-            :type="col.type"
-            :width="col.width || 55"
-            :fixed="col.fixed || false"
-            :align="col.align || 'left'"
-          ></el-table-column>
-          <el-table-column
-            v-else-if="col.slot"
-            :label="col.label"
-            :width="col.width"
-            :fixed="col.fixed || false"
-            :align="col.align || 'left'"
-          >
-            <template v-slot="scope">
-              <slot
-                :name="col.slot"
-                :row="scope.row"
-                :column="col"
-                :index="scope.$index"
-              />
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-else-if="col.prop"
-            :label="col.label"
-            :width="col.width"
-            :fixed="col.fixed || false"
-            :align="col.align || 'left'"
-          >
-            <template v-slot="scope">
-              <slot :name="col.prop" :row="scope.row" :column="col" :index="scope.$index">
+        <el-table-column v-if="col.type" :key="ci" v-bind="col">
+        </el-table-column>
+        <el-table-column v-else-if="col.slot" :key="ci" v-bind="removeSlotAttr(col)">
+          <template v-slot="scope">
+            <slot
+              :name="col.slot"
+              :row="scope.row"
+              :column="col"
+              :index="scope.$index"
+            />
+          </template>
+        </el-table-column>
+        <el-table-column v-else-if="col.prop" :key="ci" v-bind="col">
+          <template v-slot="scope">
+            <slot
+              :name="col.prop"
+              :row="scope.row"
+              :column="col"
+              :index="scope.$index"
+            >
+              <template v-if="col.prop">
                 {{ scope.row[col.prop] }}
-              </slot>
-            </template>
-          </el-table-column>
-        </span>
+              </template>
+            </slot>
+          </template>
+        </el-table-column>
       </template>
     </el-table>
     <div class="c-pagination" v-if="options.pagination">
@@ -117,10 +105,20 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    handleChangeSelect(...args) {
-      // console.log(...args);
-      this.$emit("selection-change", ...args);
+    removeSlotAttr(col={}){
+      const tmp = JSON.parse(JSON.stringify(col));
+      delete tmp.slot;
+      return tmp
     },
+    removePaginationAttr(options={}){
+      const tmp = JSON.parse(JSON.stringify(options));
+      delete tmp.pagination;
+      return tmp
+    },
+    // handleChangeSelect(...args) {
+    //   // console.log(...args);
+    //   this.$emit("selection-change", ...args);
+    // },
     // 表格显示数据量变化事件
     handleSizeChange(val) {
       const pagination = { ...this.pagination };

@@ -21,7 +21,6 @@ import cstarui from "cstarui/packages";
 Vue.use(cstarui);
 
 ...其他业务逻辑
-
 ```
 
 
@@ -35,6 +34,7 @@ Vue.use(cstarui);
       :columns="columns"
       :datas="datas"
       :pagination="pagination"
+      :options="options"
       @selection-change="handleChangeSelect"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -100,6 +100,11 @@ data() {
           name: "test2"
         }
       ],
+      options:{
+        border:true,
+        pagination:true,
+        stripe:false,
+	  },
       pagination: {
         page: 1,
         size: 10,
@@ -160,7 +165,7 @@ data() {
 | stripe     | 是否为斑马纹 table | Boolean | true/false | false |
 | ...待更新     | ...          |   ...   |    ...     |  ...  |
 
-### CTable Pagination
+### CTable  Pagination
 
 | 参数         | 说明      |   类型    |    可选项     |                   默认值                   |
 | ---------- | ------- | :-----: | :--------: | :-------------------------------------: |
@@ -171,6 +176,15 @@ data() {
 | background | 是否填充背景  | Boolean | true/false |                  true                   |
 | layout     | 分页器布局   | String  |     --     | total, sizes, prev, pager, next, jumper |
 | ...待更新     | ...     |   ...   |    ...     |                   ...                   |
+
+### CTable  Events
+
+| 事件名              | 说明                  | 参数         |
+| ---------------- | ------------------- | ---------- |
+| selection-change | 当选择项发生变化时会触发该事件     | selection  |
+| size-change      | 当`size`发生变化的时候触发该事件 | pagination |
+| current-change   | 当`page`发生变化的时候触发该事件 | pagination |
+| ...待更新           | ...                 | ...        |
 
 ### CTable  Slot 
 
