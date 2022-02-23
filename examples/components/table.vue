@@ -4,13 +4,50 @@
       :columns="columns"
       :datas="datas"
       :options="{
-        border:true,
+        border: true,
+        headerCellStyle: {
+          backgroundColor: '#409eff',
+          color: '#fff',
+        },
+        pagination: true,
+        stripe: true,
       }"
       :pagination="pagination"
       @selection-change="handleChangeSelect"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     >
+      <!-- 自定义 表头 -->
+      <!-- 
+          使用规则 columns 配置项的 slot/prop 属性加 Header 即 v-slot:[`${slot}Header`] / `${prop}Header` 
+          如：columns:[{prop:'name',label:'名称'},{slot:'operate',label:'操作'}]
+          使用自定义表头插槽示例 
+          <template v-slot:nameHeader="{column}">
+          </template>
+          <template v-slot:operateHeader="{column}">
+          </template>
+       -->
+      <template v-slot:idHeader="{ column }">
+        <span style="color: #ffaaee">
+          {{ column.label }}
+        </span>
+      </template>
+      <template v-slot:nameHeader="{ column }">
+        测试自定义表头： {{ column.label }}
+      </template>
+      <template v-slot:operateHeader="{ column }">
+        测试自定义表头： {{ column.label }}
+      </template>
+      <!-- 展开行 案例 -->
+      <template v-slot:expand="{ row }">
+        <div
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <span>用户名称：</span>
+          <span>{{ row.name }}</span>
+        </div>
+      </template>
+      <!-- 插槽 案例 -->
       <template v-slot:operate="{ row }">
         <div
           style="
@@ -26,13 +63,20 @@
           自定义操作插槽{{ row.id }}
         </div>
       </template>
+      <template slot="append">
+        <div style="padding: 20px">
+          append插槽
+          插入至表格最后一行之后的内容，如果需要对表格的内容进行无限滚动操作，可能需要用到这个
+          slot。若表格有合计行，该 slot 会位于合计行之上。
+        </div>
+      </template>
     </c-table>
   </div>
 </template>
 
 <script>
 export default {
-  name:'Table',
+  name: "Table",
   data() {
     return {
       columns: [
@@ -42,23 +86,27 @@ export default {
           fixed: "left",
           align: "center",
         },
-        // {
-        //   type: "index",
-        //   width: 55,
-        //   fixed: "left",
-        //   align: "center",
-        // },
+        {
+          type: "expand",
+          width: 55,
+          fixed: "left",
+          align: "center",
+        },
         {
           label: "ID",
           prop: "id",
           align: "center",
-          minWidth:'80px'
+          minWidth: "80px",
+          sortable:true,
+          formatter: (row, column, cellValue, index) => {
+            return `测试 formatter：${row.id}_${index}`;
+          },
         },
         {
           label: "名称",
           prop: "name",
           align: "center",
-          'min-width':'200px'
+          "min-width": "200px",
         },
         {
           label: "操作",
@@ -117,11 +165,7 @@ export default {
       size = size >= 1 ? size : 1;
       // 精准控制返回数据记录数量
       if (page * size > res.total) {
-        if (page == 1) {
-          size = res.total;
-        } else {
-          size = res.total - (page - 1) * size;
-        }
+        size = page == 1 ? res.total : res.total - (page - 1) * size;
       }
       // 截取返回数据长度
       res.list = tmp.splice((res.page - 1) * res.size, size);
@@ -153,10 +197,8 @@ export default {
       }).list;
     },
   },
-
-}
+};
 </script>
 
 <style>
-
 </style>
