@@ -35,12 +35,36 @@ Vue.use(cstarui);
  <CTable
       :columns="columns"
       :datas="datas"
-      :pagination="pagination"
       :options="options"
+      :pagination="pagination"
       @selection-change="handleChangeSelect"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     >
+	<!-- 自定义 表头 -->
+	<!-- 
+          使用规则 columns 配置项的 slot/prop 属性加 Header 即 v-slot:[`${slot}Header`] / `${prop}Header` 
+          如：columns:[{prop:'name',label:'名称'},{slot:'operate',label:'操作'}]
+          使用自定义表头插槽示例 
+          <template v-slot:nameHeader="{column}">
+          </template>
+          <template v-slot:operateHeader="{column}">
+          </template>
+       -->
+	  <template v-slot:idHeader="{ column }">
+        <span style="color: #ffaaee">
+          {{ column.label }}
+        </span>
+      </template>
+	  <!-- 展开行 案例 -->
+      <template v-slot:expand="{ row }">
+        <div
+          style="display: flex; align-items: center; justify-content: center"
+        >
+          <span>用户名称：</span>
+          <span>{{ row.name }}</span>
+        </div>
+      </template>
       <template v-slot:operate="{ row }">
         <div
           style="
@@ -56,6 +80,13 @@ Vue.use(cstarui);
           自定义操作插槽{{ row.id }}
         </div>
       </template>
+	  <template slot="append">
+        <div style="padding: 20px">
+          append插槽
+          插入至表格最后一行之后的内容，如果需要对表格的内容进行无限滚动操作，可能需要用到这个
+          slot。若表格有合计行，该 slot 会位于合计行之上。
+        </div>
+      </template>
     </CTable>
 ...
 <script>
@@ -69,21 +100,27 @@ data() {
           fixed: "left",
           align: "center"
         },
-        // {
-        //   type: "index",
-        //   width: 55,
-        //   fixed: "left",
-        //   align: "center",
-        // },
+        {
+          type: "expand",
+          width: 55,
+          fixed: "left",
+          align: "center",
+        },
         {
           label: "ID",
           prop: "id",
-          align: "center"
+          align: "center",
+          minWidth: "80px",
+          sortable:true,
+          formatter: (row, column, cellValue, index) => {
+            return `测试 formatter：${row.id}_${index}`;
+          },
         },
         {
           label: "名称",
           prop: "name",
-          align: "center"
+          align: "center",
+		  "min-width": "200px", // 或者 minWidth:"200px",
         },
         {
           label: "操作",
@@ -103,9 +140,13 @@ data() {
         }
       ],
       options:{
-        border:true,
-        pagination:true,
-        stripe:false,
+        border: true,
+        headerCellStyle: {
+          backgroundColor: '#409eff',
+          color: '#fff',
+        },
+        pagination: true,
+        stripe: true,
         // 支持 el-table除data的所有Attr
         // 如 ： 使用max-height的话，可以配置maxHeight或者"max-height" 
         // 包含 - 符号的属性 需要驼峰写法或者加双引号
@@ -199,10 +240,38 @@ data() {
 
 ### CTable  Slot 
 
+| name               | 说明                                       | 插槽属性                 |
+| ------------------ | ---------------------------------------- | :------------------- |
+| ${prop/slot}Header | 表头插槽                                     | { index,column }     |
+| --                 | 自定义插槽插槽名只能是slot属性或者prop属性的值，如果同一列这两个属性同时拥有，优先生效该列配置的slot属性对应的插槽 | { row,index,column } |
+| expand             | 展开行插槽                                    | { row,index,column } |
+| append             | 插入至表格最后一行之后的内容，若表格有合计行，该 slot 会位于合计行之上。  | --                   |
+
 ```html
-<template v-slot:[自定义的插槽值（只能是prop/slot设置的值）]="{ row,index,column }">
-        <span>索引{{index}}</span>
-        <span>行数据{{row}}</span>
-        <span>列数据{{column}}</span>
+<!-- 假设有一列配置为{prop:'id'} 则可设置如下插槽 -->
+<template v-slot:idHeader="{ column,index }">
+  <span style="color: #ffaaee">
+    <span>表头标题{{ column.label }}</span>
+    <span>表头索引{{ index }}</span>
+  </span>
+</template>
+<template v-slot:id="{ row,index,column }">
+  <span>索引{{index}}</span>
+  <span>行数据{{row}}</span>
+  <span>列数据{{column}}</span>
+</template>
+<!-- 假设有一列配置为{type:'expand'} 则可设置如下插槽 -->
+<template v-slot:expand="{ row,index,column }">
+  <span>索引{{index}}</span>
+  <span>行数据{{row}}</span>
+  <span>列数据{{column}}</span>
+</template>
+<!-- 插入至表格最后一行之后的内容 -->
+<template slot="append">
+  <div style="padding: 20px">
+    append插槽
+    插入至表格最后一行之后的内容，如果需要对表格的内容进行无限滚动操作，可能需要用到这个
+    slot。若表格有合计行，该 slot 会位于合计行之上。
+  </div>
 </template>
 ```

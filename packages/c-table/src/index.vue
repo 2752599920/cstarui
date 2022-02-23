@@ -13,52 +13,29 @@
       "
     >
       <template v-for="(col, ci) in columns">
-        <el-table-column v-if="col.type" :key="ci" v-bind="col">
-          <template v-slot="scope" v-if="col.type == 'expand'">
-            <slot
-              name="expand"
-              :row="scope.row"
-              :column="col"
-              :index="scope.$index"
-            />
-          </template>
-        </el-table-column>
         <el-table-column
-          v-else-if="col.slot"
           :key="ci"
-          v-bind="removeOtherAttr({ obj: col, remove: ['slot'] })"
+          v-bind="
+            col.slot ? removeOtherAttr({ obj: col, remove: ['slot'] }) : col
+          "
         >
-          <template slot="header" slot-scope="scope">
+          <template v-if="!col.type" slot="header">
             <slot
-              :name="`${col.slot}Header`"
+              :name="`${col.slot ? col.slot : col.prop}Header`"
               :column="col"
-              :index="scope.$index"
+              :index="ci"
             >
               {{ col.label }}
             </slot>
           </template>
-          <template v-slot="scope">
+          <template
+            v-slot="scope"
+            v-if="col.type == 'expand' || (!col.type && !col.formatter)"
+          >
             <slot
-              :name="col.slot"
-              :row="scope.row"
-              :column="col"
-              :index="scope.$index"
-            />
-          </template>
-        </el-table-column>
-        <el-table-column v-else-if="col.prop" :key="ci" v-bind="col">
-          <template slot="header" slot-scope="scope">
-            <slot
-              :name="`${col.prop}Header`"
-              :column="col"
-              :index="scope.$index"
-            >
-              {{ col.label }}
-            </slot>
-          </template>
-          <template v-slot="scope" v-if="!col.formatter">
-            <slot
-              :name="col.prop"
+              :name="
+                col.type == 'expand' ? 'expand' : col.slot ? col.slot : col.prop
+              "
               :row="scope.row"
               :column="col"
               :index="scope.$index"
@@ -71,7 +48,7 @@
         </el-table-column>
       </template>
       <template v-slot:append>
-        <slot name='append'/>
+        <slot name="append" />
       </template>
     </el-table>
     <div class="c-pagination" v-if="options.pagination">
@@ -147,39 +124,39 @@ export default {
       return tmp;
     },
     // 用于多选表格，清空用户的选择
-    clearSelection(){
+    clearSelection() {
       return this.$refs.CTable.clearSelection();
     },
     // 用于多选表格，切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）
-    toggleRowSelection(...args){
+    toggleRowSelection(...args) {
       return this.$refs.CTable.toggleRowSelection(...args);
     },
     // 用于多选表格，切换所有行的选中状态
-    toggleAllSelection(){
+    toggleAllSelection() {
       return this.$refs.CTable.toggleAllSelection();
     },
     // 用于可展开表格与树形表格，切换某一行的展开状态，如果使用了第二个参数，则是设置这一行展开与否（expanded 为 true 则展开）
-    toggleRowExpansion(...args){
+    toggleRowExpansion(...args) {
       return this.$refs.CTable.toggleRowExpansion(...args);
     },
     // 用于单选表格，设定某一行为选中行，如果调用时不加参数，则会取消目前高亮行的选中状态。
-    setCurrentRow(...args){
+    setCurrentRow(...args) {
       return this.$refs.CTable.setCurrentRow(...args);
     },
     // 用于清空排序条件，数据会恢复成未排序的状态
-    clearSort(){
+    clearSort() {
       return this.$refs.CTable.clearSort();
     },
     // 不传入参数时用于清空所有过滤条件，数据会恢复成未过滤的状态，也可传入由columnKey组成的数组以清除指定列的过滤条件
-    clearFilter(...args){
+    clearFilter(...args) {
       return this.$refs.CTable.clearFilter(...args);
     },
     // 对 Table 进行重新布局。当 Table 或其祖先元素由隐藏切换为显示时，可能需要调用此方法
-    doLayout(){
+    doLayout() {
       return this.$refs.CTable.doLayout();
     },
     // 手动对 Table 进行排序。参数prop属性指定排序列，order指定排序顺序。
-    sort(...args){
+    sort(...args) {
       return this.$refs.CTable.sort(...args);
     },
     // 表格显示数据量变化事件

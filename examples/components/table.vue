@@ -3,15 +3,7 @@
     <c-table
       :columns="columns"
       :datas="datas"
-      :options="{
-        border: true,
-        headerCellStyle: {
-          backgroundColor: '#409eff',
-          color: '#fff',
-        },
-        pagination: true,
-        stripe: true,
-      }"
+      :options="options"
       :pagination="pagination"
       @selection-change="handleChangeSelect"
       @size-change="handleSizeChange"
@@ -115,6 +107,15 @@ export default {
           align: "center",
         },
       ],
+      options:{
+        border: true,
+        headerCellStyle: {
+          backgroundColor: '#409eff',
+          color:'#fff'
+        },
+        pagination: true,
+        stripe: true,
+      },
       datas: [
         {
           id: 1,
